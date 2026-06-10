@@ -14,7 +14,9 @@ let sheets = null;
 
 async function getSheets() {
   if (sheets) return sheets;
-  const creds = JSON.parse(fs.readFileSync(CREDENTIALS_PATH, 'utf8'));
+  const creds = process.env.GOOGLE_CREDENTIALS
+    ? JSON.parse(process.env.GOOGLE_CREDENTIALS)
+    : JSON.parse(fs.readFileSync(CREDENTIALS_PATH, 'utf8'));
   const auth = new google.auth.GoogleAuth({
     credentials: creds,
     scopes: ['https://www.googleapis.com/auth/spreadsheets'],
